@@ -51,12 +51,10 @@ export const signInWithSocial = async (
       },
       headers: await headers(),
     });
-
     return {
       success: true,
       message: "Successfully signed in.",
     };
-    //redirect(`/`);
   } catch (error) {
     // Handle any errors that occur during sign-in
     const e = error as Error;
@@ -79,6 +77,10 @@ export const signUp = async (email: string, password: string, name: string) => {
         callbackURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
       },
     });
+    return {
+      success: true,
+      message: "Successfully registered.",
+    };
     //redirect(`/`);
   } catch (error) {
     // Handle any errors that occur during registration

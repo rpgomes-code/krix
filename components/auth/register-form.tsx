@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Apple, Google } from "iconsax-reactjs";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import { signInWithSocial } from "@/server/users";
-import { signIn } from "@/server/users";
+import { signUp } from "@/server/users";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,11 +25,12 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
+  name: z.string().min(3, "Name must be at least 3 characters long"),
   email: z.email().min(1, "Email is required"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
 
-export function LoginForm({
+export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -38,6 +39,7 @@ export function LoginForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -45,11 +47,15 @@ export function LoginForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    const { success, message } = await signIn(values.email, values.password);
+    const { success, message } = await signUp(
+      values.email,
+      values.password,
+      values.name
+    );
     if (!success) {
       // Handle error, e.g., show a notification
-      toast.error("Login failed:", {
-        description: message || "An error occurred while logging in.",
+      toast.error("Registration failed:", {
+        description: message || "An error occurred while registering.",
       });
     }
     setIsLoading(false);
@@ -59,7 +65,7 @@ export function LoginForm({
     provider: "google" | "discord" | "apple" | "github"
   ) {
     setIsLoading(true);
-    // Attempt to sign in with the specified social provider
+    // Attempt to sign up with the specified social provider
     if (!["google", "discord", "apple", "github"].includes(provider)) {
       toast.error("Unsupported provider");
       setIsLoading(false);
@@ -68,8 +74,8 @@ export function LoginForm({
     const { success, message } = await signInWithSocial(provider);
     if (!success) {
       // Handle error, e.g., show a notification
-      toast.error("Login failed:", {
-        description: message || "An error occurred while logging in.",
+      toast.error("Registration failed:", {
+        description: message || "An error occurred while registering.",
       });
     }
     setIsLoading(false);
@@ -83,11 +89,30 @@ export function LoginForm({
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center gap-1 mb-2 mt-4">
-                  <h1 className="text-2xl font-bold">Welcome back</h1>
+                  <h1 className="text-2xl font-bold">Welcome</h1>
                   <p className="text-muted-foreground text-sm text-balance">
-                    Login to access your Krix account.
+                    Register to access your Krix features.
                   </p>
                 </div>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="name"
+                          type="text"
+                          placeholder="krix"
+                          required
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="email"
@@ -123,14 +148,6 @@ export function LoginForm({
                         />
                       </FormControl>
                       <FormMessage />
-                      <div className="ml-auto text-sm underline-offset-2 hover:underline">
-                        <Link
-                          href="/forgot-password"
-                          className="text-muted-foreground text-xs"
-                        >
-                          <span>Forgot password?</span>
-                        </Link>
-                      </div>
                     </FormItem>
                   )}
                 />
@@ -138,10 +155,10 @@ export function LoginForm({
                   {isLoading ? (
                     <>
                       <Loader2 className="animate-spin size-4" />{" "}
-                      <span>Logging in...</span>
+                      <span>Registering...</span>
                     </>
                   ) : (
-                    "Login"
+                    "Register"
                   )}
                 </Button>
                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
@@ -193,21 +210,21 @@ export function LoginForm({
                         )
                       }
                       className={`h-11 border hover:border-2 transition-colors ${provider.hoverBorder} cursor-pointer disabled:cursor-not-allowed`}
-                      aria-label={`Sign in with ${provider.label}`}
+                      aria-label={`Register with ${provider.label}`}
                       disabled={isLoading}
                     >
                       {isLoading ? (
                         <>
                           <Loader2 className="animate-spin size-4" />
                           <span className="sr-only">
-                            Signing in with {provider.label}
+                            Registering with {provider.label}
                           </span>
                         </>
                       ) : (
                         <>
                           {provider.icon}
                           <span className="sr-only">
-                            Sign in with {provider.label}
+                            Register with {provider.label}
                           </span>
                         </>
                       )}
@@ -215,12 +232,9 @@ export function LoginForm({
                   ))}
                 </div>
                 <div className="text-center text-xs flex flex-row items-center justify-center gap-2">
-                  <p>Don't have an account? </p>
-                  <Link
-                    href="/register"
-                    className="underline underline-offset-4"
-                  >
-                    Sign up
+                  <p>Already have an account? </p>
+                  <Link href="/login" className="underline underline-offset-4">
+                    Login
                   </Link>
                 </div>
               </div>
