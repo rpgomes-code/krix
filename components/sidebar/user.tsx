@@ -45,12 +45,17 @@ export function NavUser({ user }: { user: User }) {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.username} />
-                <AvatarFallback className="rounded-lg">
-                  {getUserInitials(user.username)}
-                </AvatarFallback>
-              </Avatar>
+              <div className="relative">
+                <Avatar className="rounded-lg">
+                  <AvatarImage src={user.avatar} alt={user.username} />
+                  <AvatarFallback>
+                    {getUserInitials(user.username)}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="border-background absolute -end-1 -top-1 size-3 rounded-full border-2 bg-emerald-500">
+                  <span className="sr-only">Online</span>
+                </span>
+              </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.username}</span>
                 <span className="truncate text-xs">{user.email}</span>
@@ -67,12 +72,17 @@ export function NavUser({ user }: { user: User }) {
             <Link href="/profile" className="w-full">
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={user.avatar} alt={user.username} />
-                    <AvatarFallback className="rounded-lg">
-                      {getUserInitials(user.username)}
-                    </AvatarFallback>
-                  </Avatar>
+                  <div className="relative">
+                    <Avatar className="rounded-lg">
+                      <AvatarImage src={user.avatar} alt={user.username} />
+                      <AvatarFallback>
+                        {getUserInitials(user.username)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="border-background absolute -end-1 -top-1 size-3 rounded-full border-2 bg-emerald-500">
+                      <span className="sr-only">Online</span>
+                    </span>
+                  </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">
                       {user.username}
