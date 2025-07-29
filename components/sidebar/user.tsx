@@ -150,7 +150,7 @@ export function NavUser({ user }: { user: User }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem disabled>
+            <DropdownMenuItem>
               <Link href="/logout" className="flex w-full items-center gap-2">
                 <LogOut />
                 Log out

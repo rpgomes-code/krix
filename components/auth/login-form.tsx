@@ -23,10 +23,12 @@ import {
 import { toast } from "sonner";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { Checkbox } from "../ui/checkbox";
 
 const formSchema = z.object({
   email: z.email().min(1, "Email is required"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
+  rememberMe: z.boolean().optional(),
 });
 
 export function LoginForm({
@@ -40,12 +42,17 @@ export function LoginForm({
     defaultValues: {
       email: "",
       password: "",
+      rememberMe: false,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    const { success, message } = await signIn(values.email, values.password);
+    const { success, message } = await signIn(
+      values.email,
+      values.password,
+      values.rememberMe
+    );
     if (!success) {
       // Handle error, e.g., show a notification
       toast.error("Login failed:", {
@@ -80,7 +87,7 @@ export function LoginForm({
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center gap-1 mb-2 mt-4">
                   <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -123,17 +130,37 @@ export function LoginForm({
                         />
                       </FormControl>
                       <FormMessage />
-                      <div className="ml-auto text-sm underline-offset-2 hover:underline">
-                        <Link
-                          href="/forgot-password"
-                          className="text-muted-foreground text-xs"
-                        >
-                          <span>Forgot password?</span>
-                        </Link>
+                      <div className="flex items-center mt-2">
+                        <FormField
+                          control={form.control}
+                          name="rememberMe"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-center gap-2">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                              <FormLabel className="cursor-pointer text-xs font-normal">
+                                Remember me
+                              </FormLabel>
+                            </FormItem>
+                          )}
+                        />
+                        <div className="ml-auto text-sm underline-offset-2 hover:underline">
+                          <Link
+                            href="/forgot-password"
+                            className="text-muted-foreground text-xs"
+                          >
+                            <span>Forgot password?</span>
+                          </Link>
+                        </div>
                       </div>
                     </FormItem>
                   )}
                 />
+
                 <Button type="submit" disabled={isLoading} className="w-full">
                   {isLoading ? (
                     <>
@@ -214,13 +241,13 @@ export function LoginForm({
                     </Button>
                   ))}
                 </div>
-                <div className="text-center text-xs flex flex-row items-center justify-center gap-2">
+                <div className="text-center text-xs flex flex-row items-center justify-center gap-1">
                   <p>Don't have an account? </p>
                   <Link
                     href="/register"
                     className="underline underline-offset-4"
                   >
-                    Sign up
+                    Register
                   </Link>
                 </div>
               </div>
