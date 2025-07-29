@@ -41,7 +41,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Krix</span>
-                  <span className="truncate text-xs">Content Manager</span>
+                  <span className="truncate text-xs">
+                    Media Library Manager
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>

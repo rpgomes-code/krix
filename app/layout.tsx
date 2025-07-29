@@ -11,7 +11,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Krix",
-  description: "Your personal movie and TV show tracker",
+  description: "Your media library manager",
 };
 
 type RootLayoutProps = {
