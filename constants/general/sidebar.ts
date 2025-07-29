@@ -1,14 +1,12 @@
+import { SidebarItem } from "@/types/general/sidebar";
 import {
   LifeBuoy,
   Send,
   Shell,
   Users,
-  Wrench,
-  Clock,
-  Star,
-  UsersRound,
-  Wallet,
   MemoryStick,
+  Bell,
+  Library,
 } from "lucide-react";
 
 export const systemUser = {
@@ -19,197 +17,108 @@ export const systemUser = {
   avatar: "/krix/krix-minimalist.jpg",
 };
 
-export const holderSidebarItems = [
+export const mainSidebarItems: SidebarItem[] = [
   {
-    title: "Portfolios",
-    url: "/portfolios",
-    icon: Wallet,
-    isActive: false,
+    title: "Requests",
+    url: "/requests",
+    icon: Bell,
+    isActive: true,
     items: [
       {
-        title: "XTB - Dividend",
-        url: "/portfolios/1",
+        title: "Make a Request",
+        url: "/request",
+        isActive: true,
       },
       {
-        title: "XTB - Value/Growth",
-        url: "/portfolios/2",
+        title: "My Requests",
+        url: "/requests/my-requests",
+        isActive: true,
       },
       {
-        title: "Trading 212 - ETFs",
-        url: "/portfolios/3",
+        title: "Recent Requests",
+        url: "/requests/recent",
       },
     ],
   },
   {
-    title: "Community",
-    url: "/community",
-    icon: UsersRound,
+    title: "Library",
+    url: "/library",
+    icon: Library,
+    isActive: true,
     items: [
       {
-        title: "Feed",
-        url: "/community/feed",
+        title: "Movies",
+        url: "/library/movies",
+        isActive: true,
       },
       {
-        title: "Groups",
-        url: "/community/groups",
+        title: "Shows",
+        url: "/library/shows",
+        isActive: true,
       },
       {
-        title: "Friends",
-        url: "/community/friends",
+        title: "Documentaries",
+        url: "/library/documentaries",
       },
       {
-        title: "Portfolios",
-        url: "/community/portfolios",
+        title: "Anime Movies",
+        url: "/library/anime-movies",
       },
       {
-        title: "Leaderboard",
-        url: "/community/leaderboard",
-      },
-    ],
-  },
-  {
-    title: "Tools",
-    url: "/holder/tools",
-    icon: Wrench,
-    items: [
-      {
-        title: "Laboratory",
-        url: "/holder/tools/laboratory",
+        title: "Anime Shows",
+        url: "/library/anime-shows",
       },
       {
-        title: "Trade Analyzer",
-        url: "/holder/tools/trade-analyzer",
+        title: "Music",
+        url: "/library/music",
       },
       {
-        title: "Dip Finder",
-        url: "/holder/tools/dip-finder",
+        title: "Books",
+        url: "/library/books",
       },
       {
-        title: "Calendar",
-        url: "/holder/tools/calendar",
+        title: "Comics",
+        url: "/library/comics",
       },
       {
-        title: "News Aggregator",
-        url: "/holder/tools/news-aggregator",
+        title: "Manga",
+        url: "/library/manga",
       },
     ],
   },
 ];
 
-export const stonksSidebarItems = [
-  {
-    title: "Insights",
-    url: "/stonks/insights",
-    icon: Star,
-    isActive: false,
-    items: [
-      {
-        title: "Top Gainers",
-        url: "/stonks/insights/top-gainers",
-      },
-      {
-        title: "Top Losers",
-        url: "/stonks/insights/top-losers",
-      },
-      {
-        title: "Dividend Stocks",
-        url: "/stonks/insights/dividend-stocks",
-      },
-      {
-        title: "REITs",
-        url: "/stonks/insights/reits",
-      },
-      {
-        title: "ETFs",
-        url: "/stonks/insights/etfs",
-      },
-      {
-        title: "Indices",
-        url: "/stonks/insights/indices",
-      },
-      {
-        title: "Crypto",
-        url: "/stonks/insights/crypto",
-      },
-    ],
-  },
-  {
-    title: "Watchlists",
-    url: "/stonks/watchlists",
-    icon: Clock,
-    items: [
-      {
-        title: "Growth Stocks",
-        url: "/stonks/watchlists/1",
-      },
-      {
-        title: "Dividend Stocks",
-        url: "/stonks/watchlists/2",
-      },
-      {
-        title: "ETFs",
-        url: "/stonks/watchlists/3",
-      },
-    ],
-  },
-  {
-    title: "Tools",
-    url: "/stonks/tools",
-    icon: Wrench,
-    items: [
-      {
-        title: "Screener",
-        url: "/stonks/tools/stock-screener",
-      },
-      {
-        title: "Heatmap",
-        url: "/stonks/tools/heatmap",
-      },
-      {
-        title: "Comparator",
-        url: "/stonks/tools/comparator",
-      },
-      {
-        title: "Calculators",
-        url: "/stonks/tools/calculators",
-      },
-    ],
-  },
-];
-
-export const backofficeSidebarItems = [
+export const backofficeSidebarItems: SidebarItem[] = [
   {
     title: "Users",
     url: "/backoffice/users",
     icon: Users,
-    isActive: false,
-    items: [],
+    isActive: true,
   },
   {
     title: "Logs",
     url: "/backoffice/logs",
     icon: Shell,
-    items: [],
+    isActive: true,
   },
   {
     title: "Cache",
     url: "/backoffice/cache",
     icon: MemoryStick,
-    items: [],
   },
 ];
 
-export const secondarySidebarItems = [
+export const secondarySidebarItems: SidebarItem[] = [
   {
     title: "Support",
     url: "/support",
     icon: LifeBuoy,
-    items: [],
+    isActive: true,
   },
   {
     title: "Feedback",
     url: "/feedback",
     icon: Send,
-    items: [],
+    isActive: true,
   },
 ];

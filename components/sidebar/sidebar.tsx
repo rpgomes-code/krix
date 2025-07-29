@@ -13,8 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import {
   backofficeSidebarItems,
-  holderSidebarItems,
-  stonksSidebarItems,
+  mainSidebarItems,
   secondarySidebarItems,
   systemUser,
 } from "@/constants/general/sidebar";
@@ -51,10 +50,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarSearch />
       </SidebarHeader>
       <SidebarContent>
-        {/* Holder navigation */}
-        <SidebarSection name={"Holder"} items={holderSidebarItems} />
-        {/* Stonks navigation */}
-        <SidebarSection name={"Stonks"} items={stonksSidebarItems} />
+        {/* Main navigation */}
+        <SidebarSection items={mainSidebarItems} />
         {/* Backoffice navigation */}
         <SidebarSection name={"Backoffice"} items={backofficeSidebarItems} />
         {/* Secondary navigation items, positioned at the bottom */}

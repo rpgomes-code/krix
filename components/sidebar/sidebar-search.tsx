@@ -17,7 +17,7 @@ export function SidebarSearch({ ...props }: React.ComponentProps<"form">) {
           </Label>
           <SidebarInput
             id="search"
-            placeholder="Search a movie or show..."
+            placeholder="Search a media..."
             type="search"
             className="pl-8"
           />

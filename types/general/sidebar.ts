@@ -11,12 +11,14 @@ export type User = {
 export type SidebarSubItem = {
   title: string;
   url: string;
+  isActive?: boolean;
 };
 
 export type SidebarItem = {
   title: string;
   url: string;
   icon: LucideIcon;
+  isDefault?: boolean;
   isActive?: boolean;
   items?: SidebarSubItem[];
 };

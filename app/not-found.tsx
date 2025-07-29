@@ -47,7 +47,7 @@ export default function NotFound() {
             Return Home
           </Button>
         </Link>
-        <Link href="/request/movies">
+        <Link href="/request/movie">
           <Button variant="outline" size="lg" className="min-w-32 border-2">
             Request a Movie
           </Button>
@@ -66,15 +66,15 @@ export default function NotFound() {
             Requests
           </Link>
           <span className="text-muted-foreground">•</span>
-          <Link href="/request/movies" className="text-primary hover:underline">
+          <Link href="/request/movie" className="text-primary hover:underline">
             Request a Movie
           </Link>
           <span className="text-muted-foreground">•</span>
-          <Link href="/request/shows" className="text-primary hover:underline">
+          <Link href="/request/show" className="text-primary hover:underline">
             Request a Show
           </Link>
           <span className="text-muted-foreground">•</span>
-          <Link href="/request/animes" className="text-primary hover:underline">
+          <Link href="/request/anime" className="text-primary hover:underline">
             Request an Anime
           </Link>
         </div>
