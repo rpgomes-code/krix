@@ -5,8 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
-import { Apple, Google } from "iconsax-reactjs";
-import { FaDiscord, FaGithub } from "react-icons/fa";
+import { Google } from "iconsax-reactjs";
+import { FaDiscord, FaGithub, FaReddit, FaTwitch } from "react-icons/fa";
 import { signInWithSocial } from "@/server/users";
 import { signUp } from "@/server/users";
 import { z } from "zod";
@@ -62,11 +62,13 @@ export function RegisterForm({
   }
 
   async function onClickSocial(
-    provider: "google" | "discord" | "apple" | "github"
+    provider: "google" | "discord" | "reddit" | "github" | "twitch"
   ) {
     setIsLoading(true);
     // Attempt to sign up with the specified social provider
-    if (!["google", "discord", "apple", "github"].includes(provider)) {
+    if (
+      !["google", "discord", "reddit", "github", "twitch"].includes(provider)
+    ) {
       toast.error("Unsupported provider");
       setIsLoading(false);
       return;
@@ -166,13 +168,14 @@ export function RegisterForm({
                     Or continue with
                   </span>
                 </div>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-5 gap-3">
                   {[
                     {
-                      icon: <Apple size="20" variant="Bold" />,
-                      code: "apple",
-                      label: "Apple",
-                      hoverBorder: "hover:border-black dark:hover:border-white",
+                      icon: <FaReddit size="20" />,
+                      code: "reddit",
+                      label: "Reddit",
+                      hoverBorder:
+                        "hover:border-amber-600 dark:hover:border-amber-600",
                     },
                     {
                       icon: <Google size="20" variant="Bold" />,
@@ -192,8 +195,14 @@ export function RegisterForm({
                       icon: <FaGithub size="20" />,
                       code: "github",
                       label: "GitHub",
+                      hoverBorder: "hover:border-black dark:hover:border-white",
+                    },
+                    {
+                      icon: <FaTwitch size="20" />,
+                      code: "twitch",
+                      label: "Twitch",
                       hoverBorder:
-                        "hover:border-[#6e5494] dark:hover:border-[#6e5494]",
+                        "hover:border-purple-600 dark:hover:border-purple-600",
                     },
                   ].map((provider) => (
                     <Button
@@ -205,8 +214,9 @@ export function RegisterForm({
                           provider.code as
                             | "google"
                             | "discord"
-                            | "apple"
+                            | "reddit"
                             | "github"
+                            | "twitch"
                         )
                       }
                       className={`h-11 border hover:border-2 transition-colors ${provider.hoverBorder} cursor-pointer disabled:cursor-not-allowed`}

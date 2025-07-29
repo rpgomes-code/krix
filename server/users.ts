@@ -37,11 +37,13 @@ export async function signIn(
 }
 
 export async function signInWithSocial(
-  provider: "google" | "discord" | "apple" | "github"
+  provider: "google" | "discord" | "reddit" | "github" | "twitch"
 ) {
   try {
     // Attempt to sign in the user with the specified social provider
-    if (!["google", "discord", "apple", "github"].includes(provider)) {
+    if (
+      !["google", "discord", "reddit", "github", "twitch"].includes(provider)
+    ) {
       throw new Error("Unsupported provider");
     }
     await auth.api.signInSocial({

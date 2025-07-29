@@ -23,9 +23,13 @@ export const auth = betterAuth({
       clientId: process.env.DISCORD_CLIENT_ID as string,
       clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
     },
-    apple: {
-      clientId: process.env.APPLE_CLIENT_ID as string,
-      clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+    reddit: {
+      clientId: process.env.REDDIT_CLIENT_ID as string,
+      clientSecret: process.env.REDDIT_CLIENT_SECRET as string,
+    },
+    twitch: {
+      clientId: process.env.TWITCH_CLIENT_ID as string,
+      clientSecret: process.env.TWITCH_CLIENT_SECRET as string,
     },
   },
   plugins: [nextCookies()], // nextCookies should be the last plugin
