@@ -66,15 +66,24 @@ export default function NotFound() {
             Requests
           </Link>
           <span className="text-muted-foreground">•</span>
-          <Link href="/request/movie" className="text-primary hover:underline">
+          <Link
+            href="/requests/new/movie"
+            className="text-primary hover:underline"
+          >
             Request a Movie
           </Link>
           <span className="text-muted-foreground">•</span>
-          <Link href="/request/show" className="text-primary hover:underline">
+          <Link
+            href="/requests/new/show"
+            className="text-primary hover:underline"
+          >
             Request a Show
           </Link>
           <span className="text-muted-foreground">•</span>
-          <Link href="/request/anime" className="text-primary hover:underline">
+          <Link
+            href="/requests/new/anime"
+            className="text-primary hover:underline"
+          >
             Request an Anime
           </Link>
         </div>

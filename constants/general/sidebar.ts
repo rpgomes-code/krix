@@ -26,7 +26,7 @@ export const mainSidebarItems: SidebarItem[] = [
     items: [
       {
         title: "Make a Request",
-        url: "/request",
+        url: "/requests/new",
         isActive: true,
       },
       {
