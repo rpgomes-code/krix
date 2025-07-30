@@ -32,5 +32,13 @@ export const auth = betterAuth({
       clientSecret: process.env.TWITCH_CLIENT_SECRET as string,
     },
   },
+  pages: {
+    signIn: "/login",
+    signUp: "/register",
+    error: "/error",
+    verifyEmail: "/verify-email",
+    forgotPassword: "/forgot-password",
+    resetPassword: "/reset-password",
+  },
   plugins: [nextCookies()], // nextCookies should be the last plugin
 });
