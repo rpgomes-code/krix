@@ -7,8 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Google } from "iconsax-reactjs";
 import { FaDiscord, FaGithub, FaReddit, FaTwitch } from "react-icons/fa";
-import { signInWithSocial } from "@/server/users";
-import { signUp } from "@/server/users";
+import { signUp as serverSignUp } from "@/server/users";
+import { authClient } from "@/lib/auth-client";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,6 +23,7 @@ import {
 import { toast } from "sonner";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters long"),
@@ -35,6 +36,7 @@ export function RegisterForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,40 +49,37 @@ export function RegisterForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    const { success, message } = await signUp(
+    const { success, message } = await serverSignUp(
       values.email,
       values.password,
       values.name
     );
     if (!success) {
-      // Handle error, e.g., show a notification
       toast.error("Registration failed:", {
         description: message || "An error occurred while registering.",
       });
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   async function onClickSocial(
     provider: "google" | "discord" | "reddit" | "github" | "twitch"
   ) {
     setIsLoading(true);
-    // Attempt to sign up with the specified social provider
-    if (
-      !["google", "discord", "reddit", "github", "twitch"].includes(provider)
-    ) {
-      toast.error("Unsupported provider");
-      setIsLoading(false);
-      return;
-    }
-    const { success, message } = await signInWithSocial(provider);
-    if (!success) {
-      // Handle error, e.g., show a notification
-      toast.error("Registration failed:", {
-        description: message || "An error occurred while registering.",
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
       });
+      setIsLoading(false);
+      router.push("/");
+    } catch (error) {
+      const e = error as Error;
+      toast.error("Registration failed:", {
+        description: e.message || "An error occurred while registering.",
+      });
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   return (

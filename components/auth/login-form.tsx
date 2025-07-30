@@ -13,8 +13,8 @@ import {
   FaRedditAlien,
   FaTwitch,
 } from "react-icons/fa";
-import { signInWithSocial } from "@/server/users";
-import { signIn } from "@/server/users";
+import { signIn as serverSignIn } from "@/server/users";
+import { authClient } from "@/lib/auth-client";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +30,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.email().min(1, "Email is required"),
@@ -42,6 +43,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,40 +56,37 @@ export function LoginForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    const { success, message } = await signIn(
+    const { success, message } = await serverSignIn(
       values.email,
       values.password,
       values.rememberMe
     );
     if (!success) {
-      // Handle error, e.g., show a notification
       toast.error("Login failed:", {
         description: message || "An error occurred while logging in.",
       });
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   async function onClickSocial(
     provider: "google" | "discord" | "reddit" | "github" | "twitch"
   ) {
     setIsLoading(true);
-    // Attempt to sign in with the specified social provider
-    if (
-      !["google", "discord", "reddit", "github", "twitch"].includes(provider)
-    ) {
-      toast.error("Unsupported provider");
-      setIsLoading(false);
-      return;
-    }
-    const { success, message } = await signInWithSocial(provider);
-    if (!success) {
-      // Handle error, e.g., show a notification
-      toast.error("Login failed:", {
-        description: message || "An error occurred while logging in.",
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
       });
+      setIsLoading(false);
+      router.push("/");
+    } catch (error) {
+      const e = error as Error;
+      toast.error("Login failed:", {
+        description: e.message || "An error occurred while logging in.",
+      });
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   return (
